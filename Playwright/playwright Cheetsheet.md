@@ -1,39 +1,34 @@
-#Browser Start and Close
-const { chromium } = require('playwright');
+## Browser Start and Close
 
+# Start a Chromium browser instance 
+const { chromium } = require('playwright');
 const browser = await chromium.launch();
-Start a Chromium browser instance
+# Start a Chrome browser instance
 
 const { chromium } = require('playwright');
-
 const browser = await chromium.launch({ channel: 'chrome' });
-Start a Chrome browser instance
+# Start a Microsoft Edge browser instance
 
 const { chromium } = require('playwright');
-
 const browser = await chromium.launch({ channel: 'msedge' });
-Start a Microsoft Edge browser instance
+# Start a Firefox browser instance
 
 const { firefox } = require('playwright');
-
 const browser = await firefox.launch();
-Start a Firefox browser instance
+# Start a WebKit browser instance
 
 const { webkit } = require('playwright');
 const browser = await webkit.launch();
-Start a WebKit browser instance
-
+# Close the browser instance
 await browser.close();
-Close the browser instance
 
-Context Management
+## Context Management
+# Create a new browser context
 const context = await browser.newContext();
-Create a new browser context
-
+# Close the browser context
 await context.close();
-Close the browser context
 
-Page / Tab Management
+## Page / Tab Management
 const page = await context.newPage();
 Open a new page / tab
 
@@ -60,19 +55,16 @@ Close the current page / tab
 const isClosed = page.isClosed();
 Check if the page / tab is closed
 
-Page Information
+# Page Information
+# Get the current page URL
 const url = page.url();
-Get the current page URL
-
+# Get the current page title
 const title = await page.title();
-Get the current page title
 
-Page Assertions
+## Page Assertions
+# Assert the url of a page equals a specific value
 Requires import { expect } from '@playwright/test'
-
 await expect(page).toHaveURL('https://example.com/dashboard');
-Assert the url of a page equals a specific value
-
 await expect(page).toHaveURL(url => {
   return url.pathname === '/results' 
     && url.searchParams.get('page') === '1';
@@ -82,12 +74,11 @@ Assert the url of a page using a function
 await expect(page).toHaveTitle('Dashboard');
 Assert the title of a page equals a specific value
 
-Navigation
+## Navigation
+# Navigate to a URL
 await page.goto('https://example.com');
-Navigate to a URL
-
+# Reload the current page
 await page.reload();
-Reload the current page
 
 await page.goBack();
 Navigate back in history
@@ -95,7 +86,7 @@ Navigate back in history
 await page.goForward();
 Navigate forward in history
 
-Element Selection
+##  Element Selection
 const element = page.locator('#element');
 Select an element using a CSS selector
 
@@ -120,7 +111,7 @@ Select an element by its title attribute
 const element = page.getByTestId('submit-button');
 Select an element by its data-testid attribute
 
-Waiting for Element States
+## Waiting for Element States
 await page.locator('#menu').waitFor({ state: 'attached' });
 Wait for an element to be present in the DOM
 
@@ -139,7 +130,7 @@ Wait for an element to be hidden or removed from the page
 await page.locator('#menu').waitFor({ state: 'detached' });
 Wait for an element to be removed from the DOM
 
-Element State
+## Element State
 const text = await page.locator('#element').textContent();
 Get the text content of an element
 
@@ -180,7 +171,7 @@ Check if a checkbox or radio button is checked
 const isEditable = await page.locator('#input').isEditable();
 Check if an element is editable
 
-Element Assertions
+## Element Assertions
 Requires import { expect } from '@playwright/test'
 
 await expect(page.locator('#element')).toBeAttached();
@@ -279,7 +270,7 @@ await page.locator('#source').dragTo(page.locator('#target'), {
   });
 Drag an element and drop it onto another element with an offset
 
-Mouse
+## Mouse
 await page.mouse.move(100, 200);
 Move the mouse to specific coordinates relative to viewport
 
@@ -344,7 +335,7 @@ await page.locator('.select-color').selectOption([
   ]);
 Select multiple options in a multi-select dropdown
 
-Keyboard
+## Keyboard
 await page.keyboard.press('Enter');
 Press a key
 
@@ -413,17 +404,18 @@ const download = await downloadEvent;
 await download.saveAs('report.pdf');
 Download a file and save it to disk
 
-Evaluate javascript
+## Evaluate javascript
+# Evaluate JavaScript in the page context as a string
+
 const sum = await page.evaluate('1 + 2');
-Evaluate JavaScript in the page context as a string
+# Evaluate JavaScript in the page context as a function
 
 await page.evaluate(() => alert('Hello World'));
-Evaluate JavaScript in the page context as a function
+# Evaluate JavaScript in the page context with arguments
 
 const sum = await page.evaluate(([a, b]) => {
   return a + b;
 }, [1, 2]);
-Evaluate JavaScript in the page context with arguments
 
 Alert / Prompt / Confirmation Dialogs
 page.on('dialog', async dialog => {
@@ -450,7 +442,7 @@ page.on('dialog', async dialog => {
 });
 Listen for an alert dialog and get its message
 
-Cookies
+## Cookies
 const cookies = await context.cookies();
 Get all cookies for the current context
 
@@ -464,7 +456,7 @@ await context.addCookies([{
    secure: true, 
    sameSite: 'Lax'
  }]);
-Add cookies to the current context
+## Add cookies to the current context
 
 await context.clearCookies();
 Clear all cookies in the current context
@@ -475,21 +467,19 @@ Clear a cookie with a specific name
 await context.clearCookies({ domain: 'example.com' });
 Clear cookies for a specific domain
 
-Viewport / Window Size
+## Viewport / Window Size
+# Get the current viewport size
 // returns { width: number, height: number }
 const viewportSize = page.viewportSize();
-Get the current viewport size
-
+# Set the viewport size
 await page.setViewportSize({ width: 1280, height: 720 });
-Set the viewport size
 
-Screenshots
+## Screenshots
+# Take a screenshot of a specific element
 const element = page.locator('#element');
 await element.screenshot({ path: 'element.png' });
-Take a screenshot of a specific element
-
+# Take a screenshot of the current viewport
 await page.screenshot({ path: 'viewport.png' });
-Take a screenshot of the current viewport
 
 await page.screenshot({ path: 'fullpage.png', fullPage: true });
 Take a screenshot of the entire page
