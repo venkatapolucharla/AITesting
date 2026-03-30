@@ -69,6 +69,70 @@ export default defineConfig({
 
   },
 
+| Option	| Description |
+|---------|-------------|
+| testConfig.forbidOnly	| Whether to exit with an error if any tests are marked as test.only. Useful on CI.| 
+| testConfig.fullyParallel	| have all tests in all files to run in parallel. See Parallelism and Sharding for more details.| 
+| testConfig.projects	| Run tests in multiple configurations or on multiple browsers | 
+| testConfig.reporter	| Reporter to use. See Test Reporters to learn more about which reporters are available. | 
+| testConfig.retries	| The maximum number of retry attempts per test. See Test Retries to learn more about retries. | 
+| testConfig.testDir	| Directory with the test files. | 
+| testConfig.use	| Options with use{} | 
+| testConfig.webServer	| To launch a server during the tests, use the webServer option | 
+| testConfig.workers	| The maximum number of concurrent worker processes to use for parallelizing tests. Can also be set as percentage of logical CPU cores, e.g. '50%'.. See Parallelism and Sharding for more details.| 
+
+# Filtering Tests
+
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+
+  // Glob patterns or regular expressions to ignore test files.
+  
+  testIgnore: '*test-assets',
+
+  
+  // Glob patterns or regular expressions that match test files.
+  
+  testMatch: '*todo-tests/*.spec.ts',
+});
+
+|  Option	| Description |
+| --------| ------------|
+| testConfig.testIgnore	| Glob patterns or regular expressions that should be ignored when looking for the test files. For example, '*test-assets' | 
+| testConfig.testMatch	| Glob patterns or regular expressions that match test files. For example, '*todo-tests/*.spec.ts'. By default, Playwright runs .*(test|spec).(js|ts|mjs) files.| 
+
+# Advanced Configuration
+
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+
+  // Folder for test artifacts such as screenshots, videos, traces, etc.
+  
+  outputDir: 'test-results',
+
+  // path to the global setup files.
+  
+  globalSetup: require.resolve('./global-setup'),
+
+  // path to the global teardown files.
+  
+  globalTeardown: require.resolve('./global-teardown'),
+
+  // Each test is given 30 seconds.
+  
+  timeout: 30000,
+
+});
+
+| Option | 	Description| 
+|--------| ----------
+| testConfig.globalSetup | 	Path to the global setup file. This file will be required and run before all the tests. It must export a single function.| 
+| testConfig.globalTeardown | 	Path to the global teardown file. This file will be required and run after all the tests. It must export a single function.| 
+| testConfig.outputDir	| Folder for test artifacts such as screenshots, videos, traces, etc.| 
+| testConfig.timeout	| Playwright enforces a timeout for each test, 30 seconds by default. Time spent by the test function, test fixtures and beforeEach hooks is included in the test timeout.| 
+
 
 ## Expect Options
 
@@ -103,6 +167,8 @@ export default defineConfig({
 
 }
 );
+
+
 
 | Option	|Description|
 |---------|-----------|
