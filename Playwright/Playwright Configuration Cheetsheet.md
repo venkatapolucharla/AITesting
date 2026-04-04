@@ -2,8 +2,6 @@
 
 Here are some of the most common configuration options.
 
-
-
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
@@ -66,8 +64,7 @@ export default defineConfig({
     url: 'http://localhost:3000',
     
     reuseExistingServer: !process.env.CI,
-
-  },
+  }
 
 | Option	| Description |
 |---------|-------------|
@@ -90,7 +87,6 @@ export default defineConfig({
   // Glob patterns or regular expressions to ignore test files.
   
   testIgnore: '*test-assets',
-
   
   // Glob patterns or regular expressions that match test files.
   
@@ -160,13 +156,7 @@ export default defineConfig({
       // total amount of pixels, between 0 and 1.
       
       maxDiffPixelRatio: 0.1,
-  
-    },
-  
-  },
-
-}
-);
+      },     },});
 
 
 
@@ -176,5 +166,3 @@ export default defineConfig({
 | expect(page).toHaveScreenshot()	| Configuration for the expect(locator).toHaveScreenshot() method.|
 | expect(value).toMatchSnapshot()  | Configuration for the expect(locator).toMatchSnapshot() method.|
 
-}
-);
